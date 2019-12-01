@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: dev
+
+debug: true
+
+
+activemq:
+  queue:
+    name: activemq-queue-1
+  topic:
+    name: activemq-topic-1

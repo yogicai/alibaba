@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /
+  port: 80
+
+spring：
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/scott
+    username: root
+    password:

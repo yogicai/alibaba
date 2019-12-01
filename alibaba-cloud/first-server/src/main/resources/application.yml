@@ -1,0 +1,35 @@
+#server:
+#  port: 8761
+#eureka:
+#  client:
+#    register-with-eureka: false
+#  client:
+#    fetch-registry: false
+
+
+server:
+  port: 8761
+spring:
+  application:
+    name: cloud-server
+  profiles: salve1
+eureka:
+  server:
+    eviction-interval-timer-in-ms: 50000 #注册中心每5秒清理一次注册列表
+  client:
+    serviceUrl:
+      defaultZone: http://salve2:8762/eureka/
+---
+server:
+  port: 8762
+spring:
+  application:
+    name: cloud-server
+  profiles: salve2
+eureka:
+  server:
+    eviction-interval-timer-in-ms: 50000 #注册中心每5秒清理一次注册列表
+    enable-self-preservation: false
+  client:
+    serviceUrl:
+      defaultZone: http://salve1:8761/eureka/

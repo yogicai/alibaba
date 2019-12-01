@@ -1,0 +1,52 @@
+server:
+  port: 8200
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:booszy@localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${server.port}}
+    appname: sc-consumer
+
+spring:
+  application:
+    name: sc-consumer
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: sc-config-server
+      fail-fast: true
+      username: root
+      password: booszy
+      profile: csdn
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+  zipkin:
+    base-url: http://localhost:9411/ # 指定了 Zipkin 服务器的地址
+
+ribbon:
+  ReadTimeout:  30000 # 请求转发超时时间，处理与ribbon.ConnectTimeout类似，不同点在于这是连接建立之后的处理时间
+  ConnectTimeout:  15000 # 请求连接的超时时间 ribbon.ConnectTimeout要小于 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds的配置值时，若出现请求超时的时候，会自动进行重试路由请求
+
+  eureka:
+    enabled: true # Ribbon会根据发现机制 从eureka发现服务 默认为true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000 # 请求的命令执行超时时间
+#新版配置，否则后面dashboard无法找到hystrix.stream
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

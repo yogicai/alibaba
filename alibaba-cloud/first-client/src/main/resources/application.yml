@@ -1,0 +1,14 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: first-client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/, http://localhost:8762/eureka/
+    registry-fetch-interval-seconds: 15 #服务调用者每15秒，从注册中心抓取一次注册实例信息
+logging:
+  level:
+    com.netflex: debug

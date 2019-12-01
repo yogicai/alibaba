@@ -1,0 +1,62 @@
+server:
+  servlet:
+    context-path: /
+#  port: 80
+
+spring:
+  mvc:
+    date-format: yyyy-MM-dd
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/scott?serverTimezone=UTC
+    username: root
+    password:
+  jpa:
+    show-sql: true
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+  jms:
+    #pub-sub-domain: true #需要加入配置文件，支持发布订阅模型，默认只支持点对点
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    #生产者
+    producer:
+      acks: 1
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      # 必须配置
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    #消费者
+    consumer:
+      enable-auto-commit: false
+      auto-commit-interval: 100ms
+      # 必须配置
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: kafkatest
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 4 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 4 # 连接池中的最大空闲连接
+        min-idle: 1
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+
+logging:
+  file:
+    name: e:/logs/alibaba.log
+  level:
+    org:
+#      springframework: error
+#      apache: error
+
+mybatis:
+  config-location: classpath:/mybatis/mybatis-config.xml
+  mapper-locations: classpath:/mybatis/mapper/*.xml
